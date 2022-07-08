@@ -33,7 +33,7 @@ module.exports = class User {
       };
     }
     return {
-      status: 'failed',
+      status: 'error',
     };
   }
 

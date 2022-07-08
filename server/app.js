@@ -1,10 +1,13 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const routes = require('./routes');
+const configuration = require('./configuration');
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
@@ -19,5 +22,5 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-const port = process.env.PORT;
+const port = configuration.PORT
 app.listen(port, () => console.log(`Listening at ${port}...`));

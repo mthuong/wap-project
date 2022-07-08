@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Store</title>
+  <script src="public/bootstrap/bootstrap.bundle.min.js"></script>
+  <link href="public/bootstrap/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+  <link href="public/css/main.css" type="text/css" rel="stylesheet">
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img class="header-logo" logo=image src="./public/assets/miu-logo-horizontal.png" alt="logo">
+      </a>
+
+      <div>
+        <div class="justify-content-end" id="mob-navbar">
+          <div style="display:flex;flex-direction:column">
+            <div id="loginForm">
+              <form class="d-flex" id="login-form">
+                <input id="inputUsername" class="form-control me-2" type="text" placeholder="Username" />
+                <input id="inputPassword" class="form-control me-2" type="password" placeholder="Password" />
+                <button id="btnLogin" class="btn btn-success" type="submit">Login</button>
+              </form>
+            </div>
+            <div id="logoutForm">
+              Welcome, <span id="username"></span>
+              <button id="btnLogout" class="btn btn-warning" type="submit">Logout</button>
+            </div>
+            <div id="errorMessage">
+              <p style="color:red;">Invalid username or password!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </nav>
+  <main class="main-body">
+    <div id="welcomeMessage" class="container">
+      <h1>
+        Welcome to my store
+      </h1>
+    </div>
+
+    <div id="productList" class="container mt-4">
+      <h2>Product List</h2>
+      <table class="table table-hover align-middle">
+        <tbody id="productsTbl">
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+
+</html>
