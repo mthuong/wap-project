@@ -135,6 +135,10 @@ function displayProducts(products) {
     const actions = document.createElement('td');
     const cartIcon = document.createElement('i');
     cartIcon.className = "bi bi-cart-plus";
+    cartIcon.dataset.id = prod.id;
+    cartIcon.onclick = function() {
+      addProductToCart(prod);
+    };
     cartIcon.style.fontSize = '2rem';
     actions.appendChild(cartIcon);
     actions.style.textAlign = 'center';
@@ -146,4 +150,8 @@ function displayProducts(products) {
     tr.appendChild(actions);
     table.appendChild(tr);
   });
+}
+
+function addProductToCart(prod) {
+  console.log(prod);
 }
