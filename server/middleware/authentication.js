@@ -1,13 +1,14 @@
-const users = require('../models/users');
+const User = require('../models/user');
 
 const validateToken = (req, res, next) => {
-  let token = req.headers['Authorization'];
+  let token = req.headers['authorization'];
+  console.log(req.headers);
   if (!token) {
     next(new Error('Invalid token'));
   } else {
-    const username = users.verifyToken(username);
-    if (username) {
-      next(new Error('Invalid token'));
+    const username = User.verifyToken(token);
+    if (!username) {
+      next(new Error('Un-Authorization'));
     }
     req.username = username;
     return next();
