@@ -55,7 +55,7 @@ function get(username) {
 
   return {
     total,
-    items: cart.items
+    items: cart.items,
   };
 }
 
@@ -67,10 +67,9 @@ function placeOrder(username) {
     cart.placeOrder();
 
     if (!cart.items || cart.items.length == 0) {
-      return {
-        status: "failed",
-        message: "Your cart is empty",
-      };
+      const error = new Error("Your cart is empty");
+      error.statusCode = 210;
+      throw error;
     }
 
     cart.items.forEach((prod) => {
@@ -83,23 +82,20 @@ function placeOrder(username) {
     };
   }
 
-  return {
-    status: "failed",
-    message: "Place order failed",
-  };
+  const error = new Error("Place order failed");
+  error.statusCode = 211;
+  throw error;
 }
 
 function canPlaceOrder(username) {
   const cart = Cart.getAndAddEmptyCart(username);
-  cart.items.forEach((item) => {
+  const canPlaceOrder = cart.items.filter(item => {
     const { id, quantity } = item;
     const canPlaceOrder = productService.canPlaceOrder(id, quantity);
-    if (canPlaceOrder == false) {
-      return false;
-    }
+    return !canPlaceOrder;
   });
 
-  return true;
+  return canPlaceOrder.length == 0;
 }
 
 const cartService = {

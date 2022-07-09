@@ -196,17 +196,12 @@ function displayProducts(products) {
 }
 
 async function addProductToCart(prod) {
-  const body = JSON.stringify({
-    id: prod.id,
-    quantity: 1,
-  });
-  let result = await fetch(`${serverUrl}/api/cart/add`, {
-    method: "put",
+  let result = await fetch(`${serverUrl}/api/cart/product/${prod.id}`, {
+    method: "post",
     headers: {
       "Content-Type": "application/json",
       Authorization: getAuthorization(),
     },
-    body,
   });
   const json = await result.json();
 
@@ -444,6 +439,11 @@ async function placeCartOrder() {
     showShoppingCart(false);
     alert(json.message);
     fetchProducts();
+  } if (result.status == 211) {
+    // Place order failed, reload data
+    alert(json.message);
+    fetchProducts();
+    fetchCart();
   } else {
     handleError(result.status, json);
   }
@@ -453,7 +453,11 @@ async function placeCartOrder() {
 /*                                Handle error                                */
 /* -------------------------------------------------------------------------- */
 function handleError(status, error) {
-  if (status == 401) {
+  if (status == 211) {
+    // Place order failed
+    alert(error.message);
+
+  } else if (status == 401) {
     alert(error.message || 'Un Authorization');
     logout();
   } else {
