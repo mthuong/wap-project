@@ -1,5 +1,5 @@
-const Product = require('../models/product');
+const productService = require('../services/product.service');
 
 exports.getAll = (req, res, next) => {
-  res.status(200).json(Product.getAll());
+  res.status(200).json(productService.getAll());
 }

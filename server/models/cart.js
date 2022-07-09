@@ -6,32 +6,58 @@ module.exports = class Cart {
     this.items = [];
   }
 
-  static getCart(username) {
-    return carts.find(c => c.username === username);
-  }
-
-  addProduct(product) {
-    if (!this.items.find(i => i.id == product.id)) {
-      product.quantity = 1;
-      this.items.push(product);
+  static getAndAddEmptyCart(username) {
+    let cart = carts.find(c => c.username === username);
+    if (!cart) {
+      cart = new Cart(username);
+      carts.push(cart);
     }
+    return cart
   }
 
-  addQuantity(item) {
+  canAddItem(item, stock) {
     const i = this.items.find(i => i.id == item.id);
+    let quantity = item.quantity;
+    if (i) {
+      quantity += i.quantity;
+    }
+    if (quantity > stock) {
+      return false;
+    }
+    return true;
+  }
+
+  add(item) {
+    let i = this.items.find(i => i.id == item.id);
     if (!i) {
-      this.items.push(i);
+      i = item;
+      item.total = item.quantity * item.price;
+      this.items.push(item);
     } else {
       i.quantity += item.quantity;
+      i.total = i.quantity * i.price;
     }
+    return i;
   }
 
-  reduceQuantity(item) {
+  reduce(item) {
     const i = this.items.find(i => i.id == item.id);
-    i.quantity -= item.quantity;
-    if (i.quantity <= 0) {
-      const index = this.items.indexOf(i);
-      this.items.splice(index, 1);
+    if (i) {
+      i.quantity -= item.quantity;
+      i.total = i.quantity * i.price;
+      if (i.quantity <= 0) {
+        const index = this.items.indexOf(i);
+        this.items.splice(index, 1);
+      }
     }
+    return i;
+  }
+
+  placeOrder() {
+    const index = carts.indexOf(this);
+    if (index != -1) {
+      return carts.splice(index, 1);
+    }
+    return {};
   }
 }

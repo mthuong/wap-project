@@ -4,11 +4,19 @@ const validateToken = (req, res, next) => {
   let token = req.headers['authorization'];
   console.log(req.headers);
   if (!token) {
-    next(new Error('Invalid token'));
+    // next(new Error('Invalid token'));
+    res.status(401).json({
+      status: 'failed',
+      message: 'Invalid token'
+    });
   } else {
     const username = User.verifyToken(token);
     if (!username) {
-      next(new Error('Un-Authorization'));
+      // next(new Error('Un-Authorization'));
+      res.status(401).json({
+        status: 'failed',
+        message: 'Un-Authorization'
+      });
     }
     req.username = username;
     return next();

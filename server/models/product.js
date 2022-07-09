@@ -64,4 +64,13 @@ module.exports = class Product {
     products.splice(index, 1);
     return deleteProd;
   }
+
+  static getProductById(prodId) {
+    const product = products.find((p) => p.id == prodId);
+    return product;
+  }
+
+  canPlaceOrder(quantity) {
+    return this.stock >= quantity;
+  }
 };
