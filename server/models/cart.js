@@ -41,10 +41,10 @@ module.exports = class Cart {
     return i;
   }
 
-  reduce(item) {
+  update(item) {
     const i = this.items.find(i => i.id == item.id);
     if (i) {
-      i.quantity -= item.quantity;
+      i.quantity += item.quantity;
       i.total = i.quantity * i.price;
       if (i.quantity <= 0) {
         const index = this.items.indexOf(i);

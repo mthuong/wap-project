@@ -19,11 +19,13 @@ function add(id, quantity, username) {
       item: result,
     };
   } else {
-    throw new Error(`Can not add more items over stock (${stock})`);
+    const error = new Error(`Can not add more items over stock (${stock})`);
+    error.statusCode = 212;
+    throw error;
   }
 }
 
-function reduce(id, quantity, username) {
+function update(id, quantity, username) {
   const cart = Cart.getAndAddEmptyCart(username);
   const product = productService.getById(id);
   if (!product) {
@@ -33,7 +35,13 @@ function reduce(id, quantity, username) {
   const { image, stock, ...cartItem } = product;
   cartItem.quantity = quantity;
 
-  const result = cart.reduce(cartItem);
+  if (quantity > 0 && !cart.canAddItem(cartItem, stock)) {
+    const error = new Error(`Can not add more items over stock (${stock})`);
+    error.statusCode = 213;
+    throw error;
+  }
+
+  const result = cart.update(cartItem);
   const total = cart.total();
 
   if (result) {
@@ -89,7 +97,7 @@ function placeOrder(username) {
 
 function canPlaceOrder(username) {
   const cart = Cart.getAndAddEmptyCart(username);
-  const canPlaceOrder = cart.items.filter(item => {
+  const canPlaceOrder = cart.items.filter((item) => {
     const { id, quantity } = item;
     const canPlaceOrder = productService.canPlaceOrder(id, quantity);
     return !canPlaceOrder;
@@ -100,7 +108,7 @@ function canPlaceOrder(username) {
 
 const cartService = {
   add,
-  reduce,
+  update,
   get,
   placeOrder,
 };

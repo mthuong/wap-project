@@ -302,6 +302,7 @@ function renderCart(items) {
     thPrice.textContent = 'Price';
     const thTotal = document.createElement('th');
     thTotal.textContent = 'Total';
+    thTotal.style.width = '15%';
     const thQuantity = document.createElement('th');
     thQuantity.textContent = 'Quantity';
     
@@ -346,12 +347,10 @@ function renderCartItem(prod) {
   };
   quantity.appendChild(minus);
 
-  const input = document.createElement("span");
+  const input = document.createElement("div");
   input.id = `cart-item-quantity-${prod.id}`;
-  input.style.border = "1px solid";
+  input.classList = "cart-item-quantity";
   input.textContent = prod.quantity;
-  input.style.textAlign = "center";
-  input.style.padding = "0.5rem";
   quantity.appendChild(input);
 
   const add = document.createElement("i");
@@ -373,9 +372,9 @@ function renderCartItem(prod) {
 async function reduceQuantity(cartItem) {
   const body = JSON.stringify({
     id: cartItem.id,
-    quantity: 1,
+    quantity: -1,
   });
-  let result = await fetch(`${serverUrl}/api/cart/reduce`, {
+  let result = await fetch(`${serverUrl}/api/cart`, {
     method: "put",
     headers: {
       "Content-Type": "application/json",
@@ -400,7 +399,7 @@ async function addQuantity(cartItem) {
     id: cartItem.id,
     quantity: 1,
   });
-  let result = await fetch(`${serverUrl}/api/cart/add`, {
+  let result = await fetch(`${serverUrl}/api/cart`, {
     method: "put",
     headers: {
       "Content-Type": "application/json",
