@@ -9,15 +9,23 @@ function getById(id) {
 }
 
 function canPlaceOrder(id, quantity) {
-  const prod = Product.getById(id);
+  const prod = Product.getProductById(id);
   return prod.canPlaceOrder(quantity);
+}
+
+function placeOrder(prod) {
+  const p = Product.getProductById(prod.id);
+  if (p) {
+    p.stock -= prod.quantity;
+  }
+  return p;
 }
 
 const productService = {
   getAll,
-  placeOrder,
   getById,
   canPlaceOrder,
+  placeOrder,
 };
 
 module.exports = productService;

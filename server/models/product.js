@@ -1,44 +1,17 @@
 const configuration = require('../configuration');
+const crypto = require('crypto');
 
 const PORT = configuration.PORT;
 const HOST = configuration.HOST;
-const products = [
-  {
-    id: '1',
-    name: 'Nodejs',
-    price: 29.99,
-    image: HOST + ":" + PORT + '/public/assets/nodejs.png',
-    stock: 20
-  },
-  {
-    id: '2',
-    name: 'Reactjs',
-    price: 19.99,
-    image: HOST + ":" + PORT + '/public/assets/reactjs.png',
-    stock: 15
-  },
-  {
-    id: '3',
-    name: 'Angular',
-    price: 49.99,
-    image: HOST + ":" + PORT + '/public/assets/angular.png',
-    stock: 15
-  },
-  {
-    id: '4',
-    name: 'Javascript',
-    price: 59.99,
-    image: HOST + ":" + PORT + '/public/assets/javascript.png',
-    stock: 15
-  }
-];
+const products = [];
 
 module.exports = class Product {
-  constructor(id, name, price, image) {
+  constructor(id, name, price, image, stock) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.image = image;
+    this.stock = stock;
   }
 
   save() {
@@ -72,5 +45,41 @@ module.exports = class Product {
 
   canPlaceOrder(quantity) {
     return this.stock >= quantity;
+  }
+
+  static seed() {
+    const data = [
+      {
+        id: '1',
+        name: 'Nodejs',
+        price: 29.99,
+        image: HOST + ":" + PORT + '/public/assets/nodejs.png',
+        stock: 20
+      },
+      {
+        id: '2',
+        name: 'Reactjs',
+        price: 19.99,
+        image: HOST + ":" + PORT + '/public/assets/reactjs.png',
+        stock: 15
+      },
+      {
+        id: '3',
+        name: 'Angular',
+        price: 49.99,
+        image: HOST + ":" + PORT + '/public/assets/angular.png',
+        stock: 15
+      },
+      {
+        id: '4',
+        name: 'Javascript',
+        price: 59.99,
+        image: HOST + ":" + PORT + '/public/assets/javascript.png',
+        stock: 15
+      }
+    ];
+    data.forEach(d => {
+      new Product(d.id, d.name, d.price, d.image, d.stock).save();
+    });
   }
 };

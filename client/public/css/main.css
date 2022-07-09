@@ -1,4 +1,3 @@
-
 .header-logo {
   height: 50px;
 }
@@ -36,6 +35,32 @@ td, th {
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+/* -------------------------------------------------------------------------- */
+/*                                Shopping Cart                               */
+/* -------------------------------------------------------------------------- */
+#emptyCartMessage {
+  display: none;
+}
+
+.quantity > * {
+  display: inline;
+  vertical-align: middle;
+}
+
+.total-cost {
+  font-size: 30px;
+  text-align: right;
+  margin-right: 15%;
+}
+
+.btn-actions {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-place-order {
+  font-size: 32px;
+  margin-right: 15%;
 }

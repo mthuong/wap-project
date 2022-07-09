@@ -4,6 +4,7 @@ const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const routes = require('./routes');
 const configuration = require('./configuration');
+const Product = require('./models/product');
 
 const app = express();
 
@@ -24,3 +25,6 @@ app.use(errorHandler);
 
 const port = configuration.PORT
 app.listen(port, () => console.log(`Listening at ${port}...`));
+
+// Data seed
+Product.seed();

@@ -13,7 +13,11 @@ function add(id, quantity, username) {
 
   if (cart.canAddItem(cartItem, stock)) {
     const result = cart.add(cartItem);
-    return result;
+    const total = cart.total();
+    return {
+      total,
+      item: result,
+    };
   } else {
     throw new Error(`Can not add more items over stock (${stock})`);
   }
@@ -30,43 +34,59 @@ function reduce(id, quantity, username) {
   cartItem.quantity = quantity;
 
   const result = cart.reduce(cartItem);
+  const total = cart.total();
 
   if (result) {
-    return result;
+    return {
+      total,
+      item: result,
+    };
   } else {
     return {
-      ...cartItem,
-      quantity: 0,
+      item: { ...cartItem, quantity: 0 },
+      total,
     };
   }
 }
 
 function get(username) {
   const cart = Cart.getAndAddEmptyCart(username);
-  return cart.items;
+  const total = cart.total();
+
+  return {
+    total,
+    items: cart.items
+  };
 }
 
 function placeOrder(username) {
   const cart = Cart.getAndAddEmptyCart(username);
 
-  // Validate can place order
+  // Validate if can place order
   if (canPlaceOrder(username)) {
     cart.placeOrder();
 
+    if (!cart.items || cart.items.length == 0) {
+      return {
+        status: "failed",
+        message: "Your cart is empty",
+      };
+    }
+
     cart.items.forEach((prod) => {
-      prod.placeOrder();
+      productService.placeOrder(prod);
     });
 
     return {
-      status: 'ok',
-      message: 'Order confirmed',
-    }
+      status: "ok",
+      message: "Order confirmed",
+    };
   }
 
   return {
-    status: 'failed',
-    message: 'Place order failed',
-  }
+    status: "failed",
+    message: "Place order failed",
+  };
 }
 
 function canPlaceOrder(username) {
@@ -86,6 +106,7 @@ const cartService = {
   add,
   reduce,
   get,
+  placeOrder,
 };
 
 module.exports = cartService;

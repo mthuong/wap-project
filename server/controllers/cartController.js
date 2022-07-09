@@ -22,5 +22,6 @@ exports.get = function(req, res, next) {
 exports.placeOrder = function(req, res, next) {
   const { username } = req;
   
-  // TODO: Place order
+  // Place order
+  res.json(cartService.placeOrder(username));
 }

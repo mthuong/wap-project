@@ -31,12 +31,14 @@ module.exports = class Cart {
     let i = this.items.find(i => i.id == item.id);
     if (!i) {
       i = item;
+      i.quantity = item.quantity;
       item.total = item.quantity * item.price;
       this.items.push(item);
     } else {
       i.quantity += item.quantity;
       i.total = i.quantity * i.price;
     }
+    console.log(i);
     return i;
   }
 
@@ -59,5 +61,11 @@ module.exports = class Cart {
       return carts.splice(index, 1);
     }
     return {};
+  }
+
+  total() {
+    return this.items.reduce((total, item) => {
+      return total + item.total;
+    }, 0);
   }
 }

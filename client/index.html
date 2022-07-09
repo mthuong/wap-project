@@ -51,19 +51,46 @@
       </h1>
     </div>
 
-    <div id="productList" class="container mt-4">
-      <h2>Product List</h2>
-      <table class="table table-hover align-middle">
-        <tbody id="productsTbl">
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Image</th>
-            <th>Stock</th>
-            <th>Actions</th>
-          </tr>
-        </tbody>
-      </table>
+    <div id="storeContent">
+      <div id="productList" class="container mt-4">
+        <h2>Product List</h2>
+        <table class="table table-hover align-middle">
+          <tbody id="productsTbl">
+            
+          </tbody>
+        </table>
+      </div>
+
+      <div id="shoppingCart" class="container mt-4">
+        <h2>Your Shopping Cart</h2>
+        <div id="emptyCartMessage">
+          <h4>There is no items in your shopping cart!</h4>
+        </div>
+        <div id="shoppingCartTable">
+          <table class="table table-hover align-middle">
+            <tbody id="cartTbl">
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Quantity</th>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <p id="cart-total" class="total-cost">
+
+                  </p>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+          <div class="btn-actions">
+            <button type="button" class="btn btn-primary btn-place-order" id="placeOrderBtn">Place order</button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </body>

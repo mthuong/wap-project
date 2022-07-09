@@ -3,8 +3,8 @@ const users = {
     username: "mthuong",
     password: "123456",
   },
-  user2: {
-    username: "user2",
+  user1: {
+    username: "user1",
     password: "123456",
   },
 };
