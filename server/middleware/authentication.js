@@ -2,7 +2,6 @@ const User = require('../models/user');
 
 const validateToken = (req, res, next) => {
   let token = req.headers['authorization'];
-  // console.log(req.headers);
   if (!token) {
     const error = new Error('Invalid token');
     error.statusCode = 401;

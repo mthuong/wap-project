@@ -46,7 +46,6 @@ module.exports = class User {
       }
       return undefined;
     } catch (error) {
-      console.log(error);
       return undefined;
     }
   }

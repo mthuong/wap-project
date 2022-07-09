@@ -207,7 +207,6 @@ async function addProductToCart(prod) {
 
   if (result.status == 200) {
     // Update cart
-    console.log(json);
     updateCartItem(json.item);
     updateTotalCart(json.total);
     showShoppingCart(json.total > 0);
@@ -388,7 +387,6 @@ async function reduceQuantity(cartItem) {
 
   if (result.status == 200) {
     // Update cart
-    console.log(json);
     updateCartItem(json.item);
     updateTotalCart(json.total);
     showShoppingCart(json.total > 0);
@@ -414,7 +412,6 @@ async function addQuantity(cartItem) {
 
   if (result.status == 200) {
     // Update cart
-    console.log(json);
     updateCartItem(json.item);
     updateTotalCart(json.total);
     showShoppingCart(json.total > 0);
@@ -439,7 +436,7 @@ async function placeCartOrder() {
     showShoppingCart(false);
     alert(json.message);
     fetchProducts();
-  } if (result.status == 211) {
+  } else if (result.status == 211) {
     // Place order failed, reload data
     alert(json.message);
     fetchProducts();

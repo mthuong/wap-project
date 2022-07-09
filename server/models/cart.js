@@ -38,7 +38,6 @@ module.exports = class Cart {
       i.quantity += item.quantity;
       i.total = i.quantity * i.price;
     }
-    console.log(i);
     return i;
   }
 
