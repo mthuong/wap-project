@@ -196,12 +196,16 @@ function displayProducts(products) {
 }
 
 async function addProductToCart(prod) {
-  let result = await fetch(`${serverUrl}/api/cart/product/${prod.id}`, {
+  const body = JSON.stringify({
+    id: prod.id,
+  });
+  let result = await fetch(`${serverUrl}/api/cart`, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
       Authorization: getAuthorization(),
     },
+    body
   });
   const json = await result.json();
 
@@ -374,10 +378,9 @@ function renderCartItem(prod) {
 
 async function reduceQuantity(cartItem) {
   const body = JSON.stringify({
-    id: cartItem.id,
     quantity: -1,
   });
-  let result = await fetch(`${serverUrl}/api/cart`, {
+  let result = await fetch(`${serverUrl}/api/cart/${cartItem.id}`, {
     method: "put",
     headers: {
       "Content-Type": "application/json",
@@ -399,10 +402,9 @@ async function reduceQuantity(cartItem) {
 
 async function addQuantity(cartItem) {
   const body = JSON.stringify({
-    id: cartItem.id,
     quantity: 1,
   });
-  let result = await fetch(`${serverUrl}/api/cart`, {
+  let result = await fetch(`${serverUrl}/api/cart/${cartItem.id}`, {
     method: "put",
     headers: {
       "Content-Type": "application/json",
@@ -417,6 +419,10 @@ async function addQuantity(cartItem) {
     updateCartItem(json.item);
     updateTotalCart(json.total);
     showShoppingCart(json.total > 0);
+  } else if (result.status == 213) {
+    fetchCart();
+    fetchProducts();
+    handleError(result.status, json);
   } else {
     handleError(result.status, json);
   }

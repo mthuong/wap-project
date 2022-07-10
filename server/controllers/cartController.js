@@ -1,17 +1,18 @@
 const cartService = require('../services/cart.service');
 
 exports.addProduct = function (req, res, next) {
-  const { productId } = req.params;
+  const { id } = req.body;
   const { username } = req;
 
-  res.json(cartService.add(productId, 1, username));
+  res.json(cartService.add(id, 1, username));
 }
 
 exports.update = function(req, res, next) {
-  const { id, quantity } = req.body;
+  const { productId } = req.params;
+  const { quantity } = req.body;
   const { username } = req;
 
-  res.json(cartService.update(id, quantity, username));
+  res.json(cartService.update(productId, quantity, username));
 }
 
 exports.get = function(req, res, next) {
