@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const authService = require('../services/auth.service');
 
 const validateToken = (req, res, next) => {
   let token = req.headers['authorization'];
@@ -7,7 +8,7 @@ const validateToken = (req, res, next) => {
     error.statusCode = 401;
     next(error);
   } else {
-    const username = User.verifyToken(token);
+    const username = authService.authorizeToken(token);
     if (!username) {
       const error = new Error('Un-Authorization');
       error.statusCode = 401;
