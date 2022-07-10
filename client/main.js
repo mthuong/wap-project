@@ -16,7 +16,7 @@ window.onload = function () {
   document.getElementById("placeOrderBtn").onclick = (event) => {
     event.preventDefault();
     placeCartOrder();
-  }
+  };
 };
 
 /* -------------------------------------------------------------------------- */
@@ -37,7 +37,7 @@ async function login() {
   const json = await result.json();
 
   // Login failed
-  if (result.status === 200 && json.status == 'ok') {
+  if (result.status === 200 && json.status == "ok") {
     // Login success
     hideErrorMessage();
 
@@ -48,9 +48,9 @@ async function login() {
     fetchProducts();
     fetchCart();
   } else {
-    displayErrorMessage();    
+    displayErrorMessage();
   }
-};
+}
 
 const logout = () => {
   sessionStorage.removeItem("user");
@@ -59,8 +59,7 @@ const logout = () => {
 };
 
 const checkLogin = () => {
-  let user = sessionStorage.getItem("user");
-  user = JSON.parse(user);
+  const user = getUser();
   if (!user) {
     // User has not logged in
     displayPageLogin();
@@ -72,10 +71,24 @@ const checkLogin = () => {
   }
 };
 
+function getUser() {
+  try {
+    let user = sessionStorage.getItem("user");
+    user = JSON.parse(user);
+    return user;
+  } catch (error) {
+    return undefined;
+  }
+}
+
 function getAuthorization() {
-  let user = sessionStorage.getItem("user");
-  user = JSON.parse(user);
-  return user.token;
+  try {
+    let user = sessionStorage.getItem("user");
+    user = JSON.parse(user);
+    return user.token;
+  } catch (error) {
+    return undefined;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -123,7 +136,7 @@ async function fetchProducts() {
   } else {
     handleError(result.status, json);
   }
-};
+}
 
 function displayProducts(products) {
   const table = document.getElementById("productsTbl");
@@ -135,18 +148,18 @@ function displayProducts(products) {
 
   {
     // Add header
-    const tr = document.createElement('tr');
+    const tr = document.createElement("tr");
 
-    const thName = document.createElement('th');
-    thName.textContent = 'Name';
-    const thPrice = document.createElement('th');
-    thPrice.textContent = 'Price';
-    const thImage = document.createElement('th');
-    thImage.textContent = 'Image';
-    const thStock = document.createElement('th');
-    thStock.textContent = 'Stock';
-    const thActions = document.createElement('th');
-    thActions.textContent = 'Actions';
+    const thName = document.createElement("th");
+    thName.textContent = "Name";
+    const thPrice = document.createElement("th");
+    thPrice.textContent = "Price";
+    const thImage = document.createElement("th");
+    thImage.textContent = "Image";
+    const thStock = document.createElement("th");
+    thStock.textContent = "Stock";
+    const thActions = document.createElement("th");
+    thActions.textContent = "Actions";
 
     tr.appendChild(thName);
     tr.appendChild(thPrice);
@@ -169,7 +182,7 @@ function displayProducts(products) {
     const image = document.createElement("td");
     const img = document.createElement("img");
     img.src = prod.image;
-    img.classList = 'product-image';
+    img.classList = "product-image";
     image.appendChild(img);
     image.style.textAlign = "center";
 
@@ -206,7 +219,7 @@ async function addProductToCart(prod) {
       "Content-Type": "application/json",
       Authorization: getAuthorization(),
     },
-    body
+    body,
   });
   const json = await result.json();
 
@@ -286,7 +299,7 @@ async function fetchCart() {
 
       updateTotalCart(json.total);
 
-      renderCart(json.items)
+      renderCart(json.items);
     }
   } else {
     // Handle error
@@ -310,21 +323,21 @@ function renderCart(items) {
 
   {
     // Add header
-    const tr = document.createElement('tr');
+    const tr = document.createElement("tr");
 
-    const thName = document.createElement('th');
-    thName.textContent = 'Name';
-    thName.classList = 'th-cart';
-    const thPrice = document.createElement('th');
-    thPrice.textContent = 'Price';
-    thPrice.classList = 'th-cart';
-    const thTotal = document.createElement('th');
-    thTotal.textContent = 'Total';
-    thTotal.classList = 'th-cart';
-    const thQuantity = document.createElement('th');
-    thQuantity.textContent = 'Quantity';
-    thQuantity.classList = 'th-cart';
-    
+    const thName = document.createElement("th");
+    thName.textContent = "Name";
+    thName.classList = "th-cart";
+    const thPrice = document.createElement("th");
+    thPrice.textContent = "Price";
+    thPrice.classList = "th-cart";
+    const thTotal = document.createElement("th");
+    thTotal.textContent = "Total";
+    thTotal.classList = "th-cart";
+    const thQuantity = document.createElement("th");
+    thQuantity.textContent = "Quantity";
+    thQuantity.classList = "th-cart";
+
     tr.appendChild(thName);
     tr.appendChild(thPrice);
     tr.appendChild(thTotal);
@@ -473,11 +486,10 @@ function handleError(status, error) {
   if (status == 211) {
     // Place order failed
     alert(error.message);
-
   } else if (status == 401) {
-    alert(error.message || 'Un Authorization');
+    alert(error.message || "Un Authorization");
     logout();
   } else {
-    alert(error.message || 'Unknown error');
+    alert(error.message || "Unknown error");
   }
 }
