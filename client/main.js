@@ -168,7 +168,7 @@ function displayProducts(products) {
     const image = document.createElement("td");
     const img = document.createElement("img");
     img.src = prod.image;
-    img.height = 50;
+    img.classList = 'product-image';
     image.appendChild(img);
     image.style.textAlign = "center";
 
@@ -298,13 +298,16 @@ function renderCart(items) {
 
     const thName = document.createElement('th');
     thName.textContent = 'Name';
+    thName.classList = 'th-cart';
     const thPrice = document.createElement('th');
     thPrice.textContent = 'Price';
+    thPrice.classList = 'th-cart';
     const thTotal = document.createElement('th');
     thTotal.textContent = 'Total';
-    thTotal.style.width = '15%';
+    thTotal.classList = 'th-cart';
     const thQuantity = document.createElement('th');
     thQuantity.textContent = 'Quantity';
+    thQuantity.classList = 'th-cart';
     
     tr.appendChild(thName);
     tr.appendChild(thPrice);

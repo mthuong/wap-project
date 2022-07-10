@@ -27,12 +27,17 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
+  table-layout: fixed;
 }
 
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+}
+
+.product-image {
+  height: 50px;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -75,3 +80,4 @@ td, th {
   width: 50px;
   margin: 0px 10px;
 }
+
