@@ -32,9 +32,6 @@ module.exports = class User {
         token: user.username + `-${Date.now()}`,
       };
     }
-    return {
-      status: 'error',
-    };
   }
 
   static verifyToken(token) {

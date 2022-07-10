@@ -24,15 +24,27 @@
         <div class="justify-content-end" id="mob-navbar">
           <div style="display:flex;flex-direction:column">
             <div id="loginForm">
-              <form class="d-flex" id="login-form">
-                <input id="inputUsername" class="form-control me-2" type="text" placeholder="Username" />
-                <input id="inputPassword" class="form-control me-2" type="password" placeholder="Password" />
-                <button id="btnLogin" class="btn btn-success" type="submit">Login</button>
+              <form class="d-flex justify-content-end flex-row align-items-center" id="login-form">
+                <div class="me-3">
+                  <div class="d-flex">
+                    <label for="inputUsername" class="m-auto">Username: </label>
+                    <div class="col-sm-8">
+                      <input id="inputUsername" class="form-control" type="text" placeholder="Username" />
+                    </div>
+                  </div>
+                  <div class="d-flex pt-1">
+                    <label for="inputUsername" class="m-auto">Password: </label>
+                    <div class="col-sm-8">
+                      <input id="inputPassword" class="form-control" type="password" placeholder="Password" />
+                    </div>
+                  </div>
+                </div>
+                <button id="btnLogin" class="btn btn-success me-3" type="submit">Login</button>
               </form>
             </div>
             <div id="logoutForm">
               Welcome, <span id="username"></span>
-              <button id="btnLogout" class="btn btn-warning" type="submit">Logout</button>
+              <button id="btnLogout" class="btn btn-warning me-3" type="submit">Logout</button>
             </div>
             <div id="errorMessage">
               <p style="color:red;">Invalid username or password!</p>
@@ -56,7 +68,7 @@
         <h2>Product List</h2>
         <table class="table table-hover align-middle">
           <tbody id="productsTbl">
-            
+
           </tbody>
         </table>
       </div>

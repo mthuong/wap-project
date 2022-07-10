@@ -37,9 +37,7 @@ async function login() {
   const json = await result.json();
 
   // Login failed
-  if (json.status == "error") {
-    displayErrorMessage();
-  } else {
+  if (result.status === 200 && json.status == 'ok') {
     // Login success
     hideErrorMessage();
 
@@ -49,6 +47,8 @@ async function login() {
 
     fetchProducts();
     fetchCart();
+  } else {
+    displayErrorMessage();    
   }
 };
 
