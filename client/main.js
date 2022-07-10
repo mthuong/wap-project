@@ -55,6 +55,7 @@ async function login() {
 const logout = () => {
   sessionStorage.removeItem("user");
   displayPageLogin();
+  removeAllCartChild();
 };
 
 const checkLogin = () => {
@@ -293,13 +294,19 @@ async function fetchCart() {
   }
 }
 
-function renderCart(items) {
+function removeAllCartChild() {
   const table = document.getElementById("cartTbl");
 
   // Remove all child element if have
   while (table.firstChild) {
     table.removeChild(table.firstChild);
   }
+}
+
+function renderCart(items) {
+  const table = document.getElementById("cartTbl");
+
+  removeAllCartChild();
 
   {
     // Add header
@@ -449,7 +456,7 @@ async function placeCartOrder() {
     showShoppingCart(false);
     alert(json.message);
     fetchProducts();
-  } else if (result.status == 211) {
+  } else if (result.status == 211 || result.status == 210) {
     // Place order failed, reload data
     alert(json.message);
     fetchProducts();
