@@ -91,6 +91,14 @@ function placeOrder(username) {
   }
 
   const error = new Error("Place order failed");
+  cart.items.forEach(item => {
+    const { id, quantity, name } = item;
+    const canPlaceOrder = productService.canPlaceOrder(id, quantity);
+    const product = productService.getById(id);
+    if (canPlaceOrder == false) {
+      error.message += `\nItem ${name} is over-ordered in stock (${product.stock})`;
+    }
+  })
   error.statusCode = 211;
   throw error;
 }
