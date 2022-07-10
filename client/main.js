@@ -214,6 +214,11 @@ async function addProductToCart(prod) {
     updateCartItem(json.item);
     updateTotalCart(json.total);
     showShoppingCart(json.total > 0);
+  } else if (result.status == 212) {
+    // Reload data
+    fetchProducts();
+    fetchCart();
+    handleError(result.status, json);
   } else {
     handleError(result.status, json);
   }
