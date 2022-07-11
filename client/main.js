@@ -213,6 +213,10 @@ function displayProducts(products) {
 }
 
 async function addProductToCart(prod) {
+  if (prod.stock == 0) {
+    return;
+  }
+
   const body = JSON.stringify({
     id: prod.id,
   });
