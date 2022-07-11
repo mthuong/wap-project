@@ -54,28 +54,28 @@ module.exports = class Product {
         name: 'Nodejs',
         price: 29.99,
         image: HOST + ":" + PORT + '/public/assets/nodejs.png',
-        stock: 20
+        stock: 10
       },
       {
         id: '2',
         name: 'Reactjs',
         price: 19.99,
         image: HOST + ":" + PORT + '/public/assets/reactjs.png',
-        stock: 15
+        stock: 5
       },
       {
         id: '3',
         name: 'Angular',
         price: 49.99,
         image: HOST + ":" + PORT + '/public/assets/angular.png',
-        stock: 15
+        stock: 5
       },
       {
         id: '4',
         name: 'Javascript',
         price: 59.99,
         image: HOST + ":" + PORT + '/public/assets/javascript.png',
-        stock: 15
+        stock: 5
       }
     ];
     data.forEach(d => {

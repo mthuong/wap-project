@@ -120,7 +120,6 @@ const hideErrorMessage = () => {
 /* -------------------------------------------------------------------------- */
 /*                                Product List                                */
 /* -------------------------------------------------------------------------- */
-
 async function fetchProducts() {
   let result = await fetch(`${serverUrl}/api/products`, {
     method: "get",
@@ -191,7 +190,11 @@ function displayProducts(products) {
 
     const actions = document.createElement("td");
     const cartIcon = document.createElement("i");
-    cartIcon.className = "bi bi-cart-plus";
+    if (prod.stock == 0) {
+      cartIcon.className = "bi bi-cart-plus btn-add-cart-disable";
+    } else {
+      cartIcon.className = "bi bi-cart-plus btn-add-cart";
+    }
     cartIcon.dataset.id = prod.id;
     cartIcon.onclick = function () {
       addProductToCart(prod);
@@ -276,6 +279,17 @@ function updateCartItem(item) {
     total.textContent = `$${(Math.round(item.total * 100) / 100).toFixed(2)}`;
     const quantity = document.getElementById(`cart-item-quantity-${id}`);
     quantity.textContent = item.quantity;
+
+    const add = document.getElementById(`cart-item-add-${item.id}`);
+    if (item.quantity >= item.product.stock) {
+      add.classList = "bi bi-plus-circle-fill btn-add btn-disable";
+    } else {
+      add.classList = "bi bi-plus-circle-fill btn-add";
+    }
+    add.onclick = function () {
+      addQuantity(item);
+    };
+
   } else {
     renderCartItem(item);
   }
@@ -372,8 +386,9 @@ function renderCartItem(prod) {
   const quantity = document.createElement("td");
   quantity.classList = "quantity";
   const minus = document.createElement("i");
-  minus.classList = "bi bi-dash-lg";
+  minus.classList = "bi bi-dash-circle-fill btn-minus";
   minus.style.fontSize = "2rem";
+  minus.id = `cart-item-minus-${prod.id}`;
   minus.onclick = function () {
     reduceQuantity(prod);
   };
@@ -386,7 +401,12 @@ function renderCartItem(prod) {
   quantity.appendChild(input);
 
   const add = document.createElement("i");
-  add.classList = "bi bi-plus-lg";
+  if (prod.quantity >= prod.product.stock) {
+    add.classList = "bi bi-plus-circle-fill btn-add btn-disable";
+  } else {
+    add.classList = "bi bi-plus-circle-fill btn-add";
+  }
+  add.id = `cart-item-add-${prod.id}`;
   add.style.fontSize = "2rem";
   add.onclick = function () {
     addQuantity(prod);
@@ -425,7 +445,15 @@ async function reduceQuantity(cartItem) {
   }
 }
 
+function canAddMoreQuantity(cartItem) {
+  return cartItem.quantity < cartItem.product.stock;
+}
+
 async function addQuantity(cartItem) {
+  if (!canAddMoreQuantity(cartItem)) {
+    return;
+  }
+
   const body = JSON.stringify({
     quantity: 1,
   });

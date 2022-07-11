@@ -40,6 +40,14 @@ td, th {
   height: 50px;
 }
 
+.btn-add-cart {
+  color: green;
+}
+
+.btn-add-cart-disable {
+  color: gray;
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                Shopping Cart                               */
 /* -------------------------------------------------------------------------- */
@@ -81,3 +89,14 @@ td, th {
   margin: 0px 10px;
 }
 
+.btn-minus {
+  color: red;
+}
+
+.btn-add {
+  color: green;
+}
+
+.btn-disable {
+  color: gray;
+}

@@ -13,6 +13,7 @@ function add(id, quantity, username) {
 
   if (cart.canAddItem(cartItem, stock)) {
     const result = cart.add(cartItem);
+    result.product = product;
     const total = cart.total();
     return {
       total,
@@ -42,6 +43,7 @@ function update(id, quantity, username) {
   }
 
   const result = cart.update(cartItem);
+  result.product = product;
   const total = cart.total();
 
   if (result) {
@@ -60,7 +62,9 @@ function update(id, quantity, username) {
 function get(username) {
   const cart = Cart.getAndAddEmptyCart(username);
   const total = cart.total();
-
+  cart.items.forEach(item => {
+    item = productService.getById(item.id);
+  })
   return {
     total,
     items: cart.items,
